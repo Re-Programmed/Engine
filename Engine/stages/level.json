@@ -1,0 +1,1 @@
+{"stageObjects":[{"xPos":178.95688,"yPos":124.329445,"xScale":25,"yScale":25,"rotation":0,"texture":"test_sp","Layer":4,"physics":false,"triggers":[{"radius":25,"type":4,"i1":1}],"PhysicsSettings":null}],"Name":"level"}
