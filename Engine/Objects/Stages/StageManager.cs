@@ -30,6 +30,11 @@ namespace Engine.Objects.Stages
             LoadStage(0, game);
         }
 
+        public static bool IsMenu()
+        {
+            return currentStage.UI;
+        }
+
         public static int StageCount()
         {
             if(stages == null)

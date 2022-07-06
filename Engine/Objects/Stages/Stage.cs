@@ -11,7 +11,9 @@ namespace Engine.Objects.Stages
     class Stage
     {
         public List<StageObject> stageObjects { get; set; } = new List<StageObject>();
-        public string Name { get; private set; }
+        public string Name { get; set; }
+
+        public bool UI { get; set; } = false;
 
         /// <summary>
         /// Creates a .json for this stage.

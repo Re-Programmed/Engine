@@ -21,6 +21,7 @@ using Engine.Physics;
 using Engine.Objects.Stages;
 using Engine.DevUtils;
 using Engine.GameFiles;
+using Engine.Objects.UI;
 
 namespace Engine
 {
@@ -92,6 +93,10 @@ namespace Engine
             */
 
             StageManager.LoadStagesFromFiles(this);
+            MenuLoader.LoadMenusFromFiles(this);
+
+            MenuLoader.LoadMenu(0, this);
+
         }
 
         protected unsafe override void LoadContent()
@@ -139,36 +144,39 @@ namespace Engine
 
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            foreach (ObjectLayer objlay in objects.Values)
+            if (!StageManager.IsMenu())
             {
-                foreach(GameObject obj in objlay.objects)
+                foreach (ObjectLayer objlay in objects.Values)
                 {
-                    if (obj.totalposition.X > cam.FocusPosition.X - (DisplayManager.WindowSize.X / cam.Zoom / 2f) - 300f && obj.totalposition.X < cam.FocusPosition.X + (100f + DisplayManager.WindowSize.X / cam.Zoom / 2f))
+                    foreach (GameObject obj in objlay.objects)
                     {
-                        if (obj.totalposition.Y > cam.FocusPosition.Y - (DisplayManager.WindowSize.Y / cam.Zoom / 2f) - 300f && obj.totalposition.Y < cam.FocusPosition.Y + (100f + DisplayManager.WindowSize.Y / cam.Zoom / 2f))
+                        if (obj.totalposition.X > cam.FocusPosition.X - (DisplayManager.WindowSize.X / cam.Zoom / 2f) - 300f && obj.totalposition.X < cam.FocusPosition.X + (100f + DisplayManager.WindowSize.X / cam.Zoom / 2f))
                         {
-                            if(obj.Loaded == false)
+                            if (obj.totalposition.Y > cam.FocusPosition.Y - (DisplayManager.WindowSize.Y / cam.Zoom / 2f) - 300f && obj.totalposition.Y < cam.FocusPosition.Y + (100f + DisplayManager.WindowSize.Y / cam.Zoom / 2f))
                             {
-                                obj.OnReEnable(this);
+                                if (obj.Loaded == false)
+                                {
+                                    obj.OnReEnable(this);
+                                }
+                                obj.Loaded = true;
+                                sr.DrawSprite(cam, obj, obj.texture.getTexture(), obj.color);
                             }
-                            obj.Loaded = true;
-                            sr.DrawSprite(cam, obj, obj.texture.getTexture(), obj.color);
+                            else
+                            {
+                                if (obj.Loaded && !obj.AlwaysLoad)
+                                {
+                                    obj.OnDisable(this);
+                                    obj.Loaded = false;
+                                }
+                            }
                         }
                         else
                         {
-                            if(obj.Loaded && !obj.AlwaysLoad)
+                            if (obj.Loaded && !obj.AlwaysLoad)
                             {
                                 obj.OnDisable(this);
                                 obj.Loaded = false;
                             }
-                        }
-                    }
-                    else
-                    {
-                        if (obj.Loaded && !obj.AlwaysLoad)
-                        {
-                            obj.OnDisable(this);
-                            obj.Loaded = false;
                         }
                     }
                 }
@@ -198,21 +206,42 @@ namespace Engine
             foreach(KeyValuePair<GameObject, int> obj in createObjects)
             {
                 obj.Key.SetLayer(obj.Value);
-                objects[obj.Value].objects.Add(obj.Key);
+                if(StageManager.IsMenu())
+                {
+                    UI[obj.Value].objects.Add(obj.Key);
+                }
+                else
+                {
+                    objects[obj.Value].objects.Add(obj.Key);
+                }
             }
 
             createObjects.Clear();
 
-            foreach(ObjectLayer ol in objects.Values)
+            if (!StageManager.IsMenu())
+            {
+                foreach (ObjectLayer ol in objects.Values)
+                {
+                    foreach (GameObject obj in ol.objects)
+                    {
+                        if (obj.Loaded || obj.AlwaysLoad)
+                        {
+                            obj.UpdateComponents(this);
+                            obj.Update();
+                            obj.Update(this);
+                        }
+                    }
+                }
+            }
+
+            foreach (ObjectLayer ol in UI.Values)
             {
                 foreach (GameObject obj in ol.objects)
                 {
-                    if(obj.Loaded || obj.AlwaysLoad)
-                    {
-                        obj.UpdateComponents(this);
-                        obj.Update();
-                        obj.Update(this);
-                    }
+                    obj.UpdateComponents(this);
+                    obj.Update();
+                    obj.Update(this);
+                   
                 }
             }
         }
