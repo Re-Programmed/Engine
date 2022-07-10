@@ -1,0 +1,3 @@
+;The data a texture will inherit if it has no .DATA file.
+true
+NAME=%file_name%

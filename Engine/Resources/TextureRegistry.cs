@@ -8,6 +8,7 @@ namespace Engine.Resources
 {
     class TextureRegistry
     {
+        const string DefaultTextureData = "../../../textures/default_data.DATA";
         public static void LoadRegistry()
         {
             string[] filedata = Directory.GetFiles("../../../textures", "*.DATA", SearchOption.AllDirectories);
@@ -16,17 +17,25 @@ namespace Engine.Resources
 
             foreach(string file in files)
             {
-                foreach(string data in filedata)
-                {
-                    if(Path.GetFileNameWithoutExtension(file) == Path.GetFileNameWithoutExtension(data))
-                    {
-                        string datacontent = File.ReadAllText(data);
-                        string[] dataarray = datacontent.Split('\n');
+                string data = DefaultTextureData;
+                bool usingDefault = true;
 
-                        ResourceManager.LoadTexture(file, dataarray[1].Contains("true"), dataarray[2].Replace("NAME=", "").ToLower().Replace(" ", "_"));
+                foreach(string data_check in filedata)
+                {
+                    if(Path.GetFileNameWithoutExtension(file) == Path.GetFileNameWithoutExtension(data_check))
+                    {
+                        data = data_check;
+                        usingDefault = false;
                         break;
                     }
                 }
+
+                string datacontent = File.ReadAllText(data);
+                string[] dataarray = datacontent.Split('\n');
+
+                string name = usingDefault ? Path.GetFileNameWithoutExtension(file) : dataarray[2].Replace("NAME=", "").ToLower().Replace(" ", "_");
+
+                ResourceManager.LoadTexture(file, dataarray[1].Contains("true"), name);
             }
         }
     }
