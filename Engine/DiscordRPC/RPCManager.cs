@@ -33,6 +33,7 @@ namespace Engine.DiscordRPC
 
 			UpdateState(new RichPresence()
 			{
+				Timestamps = new Timestamps(DateTime.UtcNow),
 				Details = "Testing.",
 				State = "Test.",
 				Assets = new Assets()
