@@ -10,6 +10,9 @@ namespace Engine.DiscordRPC
     {
 		static DiscordRpcClient client;
 
+		/// <summary>
+		/// Run on initilization to start the RPC.
+		/// </summary>
 		public static void Initialize()
 		{
 			client = new DiscordRpcClient("995784691179331584");
@@ -41,11 +44,18 @@ namespace Engine.DiscordRPC
 			});
 		}
 
+		/// <summary>
+		/// Updates the status displayed on discord.
+		/// </summary>
+		/// <param name="presence">Information to show.</param>
 		public static void UpdateState(RichPresence presence)
         {
 			client.SetPresence(presence);
 		}
 
+		/// <summary>
+		/// Run on window close to release data. FAILURE TO RUN THIS MAY CAUSE A MEMORY LEAK.
+		/// </summary>
 		public static void Deinitialize()
 		{
 			client.Dispose();
