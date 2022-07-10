@@ -14,13 +14,14 @@ namespace Engine.Objects.UI
 
         public float rotation { get; set; }
 
+
         public string texture { get; set; }
 
         public int Layer { get; set; } = 4;
 
         public StoredMenuObject()
         {
-
+            
         }
 
         public StoredMenuObject(Vector2 pos, Vector2 scale, float rotation, string texture, int layer)
