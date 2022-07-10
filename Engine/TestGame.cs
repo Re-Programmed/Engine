@@ -200,7 +200,8 @@ namespace Engine
 
         protected override void Update()
         {
-            foreach(KeyValuePair<IDObject, int> destroyobj in removeObjects)
+
+            foreach (KeyValuePair<IDObject, int> destroyobj in removeObjects)
             {
                 objects[destroyobj.Value].objects.Remove(destroyobj.Key.gameObject);
             }

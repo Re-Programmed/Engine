@@ -30,5 +30,24 @@ namespace Engine.Input
             return (Glfw.GetMouseButton(DisplayManager.Window, mb) == InputState.Press);
         }
         
+        public static float[] GetJoystick(Joystick joystick)
+        {
+            if(Glfw.JoystickPresent(joystick))
+            {
+                return Glfw.GetJoystickAxes(joystick);
+            }
+
+            return null;
+        }
+
+        public static InputState[] GetJoystickButtons(Joystick joystick)
+        {
+            if (Glfw.JoystickPresent(joystick))
+            {
+                return Glfw.GetJoystickButtons(joystick);
+            }
+
+            return null;
+        }
     }
 }
