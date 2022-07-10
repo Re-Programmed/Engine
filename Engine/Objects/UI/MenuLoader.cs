@@ -33,7 +33,6 @@ namespace Engine.Objects.UI
             {
                 if (m.Name == id)
                 {
-                    Console.WriteLine("LOADED MENU");
                     m.LoadMenu(game);
                     return;
                 }

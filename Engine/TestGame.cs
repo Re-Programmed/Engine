@@ -64,15 +64,11 @@ namespace Engine
 
         protected unsafe override void Initalize()
         {
+            Engine.DiscordRPC.RPCManager.Initialize();
+
             /* Stage s = new Stage();
              s.AddNewStageObject(new StageObject(new Vector2(0f, 100), new Vector2(40, 56), 0, "test_sp"));
              Stage.CreateFileFromStage(s);*/
-            /*
-            SaveManager.SaveValue("test_key", 152);
-            SaveManager.CreateSaveData(0, Encoding.UTF8);
-            */
-            SaveManager.LoadSaveData(0);
-            Console.WriteLine("VALUE GOT: " + SaveManager.ReadValue("test_key", 0));
 
             GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "test_sp");
             player.SetLayer(4);
@@ -272,6 +268,9 @@ namespace Engine
             return rand;
         }
 
-       
+        protected override void Close()
+        {
+            Engine.DiscordRPC.RPCManager.Deinitialize();
+        }
     }
 }

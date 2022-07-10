@@ -65,6 +65,8 @@ namespace Engine.Game
 
             }
 
+            Close();
+
             DisplayManager.CloseWindow();
         }
 
@@ -73,5 +75,7 @@ namespace Engine.Game
 
         protected abstract void Update();
         protected abstract void Render();
+
+        protected abstract void Close();
     }
 }
