@@ -23,6 +23,7 @@ using Engine.DevUtils;
 using Engine.GameFiles;
 using Engine.Objects.UI;
 using Engine.Resources.SaveData;
+using Engine.Objects.Components.UIComponents;
 
 namespace Engine
 {
@@ -266,6 +267,8 @@ namespace Engine
                    
                 }
             }
+
+            ButtonSelectionManager.RecieveInput(this);
 
         }
 
