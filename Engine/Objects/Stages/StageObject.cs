@@ -28,7 +28,7 @@ namespace Engine.Objects.Stages
 
         public bool physics { get; set; } = false;
 
-        public List<TriggerData> triggers { get; set; } = new List<TriggerData>();
+        public List<ComponentData> triggers { get; set; } = new List<ComponentData>();
 
         public Physics.PhysicsObjectSettings PhysicsSettings { get; set; }
         public StageObject(Vector2 position, Vector2 scale, float rotation, string textureName, int layer, List<Component> components)
@@ -110,9 +110,9 @@ namespace Engine.Objects.Stages
                 myObject.AddComponent(phy);
             }
 
-            foreach(TriggerData t in triggers)
+            foreach(ComponentData t in triggers)
             {
-                myObject.AddComponent(t.GenerateFromData());
+                myObject.AddComponent(t.GenerateTriggerFromData());
             }
 
             game.Instantiate(myObject, Layer);

@@ -1,5 +1,6 @@
 ﻿using Engine;
 using Engine.Objects;
+using Engine.Objects.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +45,7 @@ namespace Engine.Objects.Stages
 
         public void LoadStage(TestGame game)
         {
-            foreach(ObjectLayer l in game.objects.Values)
+            foreach (ObjectLayer l in game.objects.Values)
             {
                 foreach(GameObject obj in l.objects)
                 {
@@ -55,7 +56,7 @@ namespace Engine.Objects.Stages
                 }
             }
 
-            foreach(StageObject obj in stageObjects)
+            foreach (StageObject obj in stageObjects)
             {
                 obj.LoadObject(game);
             }

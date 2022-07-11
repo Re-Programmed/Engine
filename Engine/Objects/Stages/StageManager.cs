@@ -73,11 +73,16 @@ namespace Engine.Objects.Stages
             }
         }
 
+        public static Stage GetStage(int id)
+        {
+            return stages[id];
+        }
+
         public static void LoadStage(int id, TestGame game)
         {
-            currentStage = stages[id];
             stages[id].LoadStage(game);
             stageId = id;
+            currentStage = stages[id];
         }
 
         public static void LoadStage(string id, TestGame game)
@@ -88,8 +93,8 @@ namespace Engine.Objects.Stages
                 if(s.Name == id)
                 {
                     stageId = i;
-                    currentStage = s;
                     s.LoadStage(game);
+                    currentStage = s;
                     return;
                 }
                 i++;

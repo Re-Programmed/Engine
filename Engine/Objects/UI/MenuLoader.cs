@@ -26,6 +26,11 @@ namespace Engine.Objects.UI
             menus[id].LoadMenu(game);
         }
 
+        public static void ClearMenu(TestGame game)
+        {
+            game.ClearUI();
+        }
+
         public static void LoadMenu(string id, TestGame game)
         {
             int i = 0;

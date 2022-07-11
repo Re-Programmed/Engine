@@ -27,7 +27,7 @@ namespace Engine.Objects.Components
             track = TestGame.GetDefaultTriggerObject();
         }
 
-        public LayerSwitch(TriggerData td)
+        public LayerSwitch(ComponentData td)
             :base(td)
         {
             

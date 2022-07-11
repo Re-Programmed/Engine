@@ -12,7 +12,8 @@ namespace Engine.Objects.Components
             BoxCollider,
             Script,
             PhysicsRel,
-            Trigger_Layer
+            Trigger_Layer,
+            UI_Button_Stage
         }
 
         public abstract ComponentType GetComponentType();

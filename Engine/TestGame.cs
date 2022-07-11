@@ -198,13 +198,29 @@ namespace Engine
         }
 
 
+        bool clearUI = false;
+
+        public void ClearUI()
+        {
+            clearUI = true;
+        }
+
         protected override void Update()
         {
+            if(clearUI)
+            {
+                foreach (ObjectLayer ol in UI.Values)
+                {
+                    ol.objects.Clear();
+                }
+                clearUI = false;
+            }
 
             foreach (KeyValuePair<IDObject, int> destroyobj in removeObjects)
-            {
+            { 
                 objects[destroyobj.Value].objects.Remove(destroyobj.Key.gameObject);
             }
+
 
             foreach(KeyValuePair<GameObject, int> obj in createObjects)
             {
@@ -219,6 +235,7 @@ namespace Engine
                 }
             }
 
+            removeObjects.Clear();
             createObjects.Clear();
 
             if (!StageManager.IsMenu())
@@ -237,18 +254,21 @@ namespace Engine
                 }
             }
 
+            int c_Check = 0;
             foreach (ObjectLayer ol in UI.Values)
             {
                 foreach (GameObject obj in ol.objects)
                 {
+                    c_Check++;
                     obj.UpdateComponents(this);
                     obj.Update();
                     obj.Update(this);
                    
                 }
             }
+
         }
- 
+
         Dictionary<GameObject, int> createObjects = new Dictionary<GameObject, int>();
         public void Instantiate(GameObject obj, int layer)
         {

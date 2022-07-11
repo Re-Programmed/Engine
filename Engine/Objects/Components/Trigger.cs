@@ -12,7 +12,7 @@ namespace Engine.Objects.Components
         bool triggered = false;
         protected GameObject gameObject;
         protected GameObject track;
-        public TriggerData data;
+        public ComponentData data;
 
         public T GetClone<T>()
         {
@@ -73,17 +73,17 @@ namespace Engine.Objects.Components
         /// <param name="track">What object to check for intersection with.</param>
         public Trigger(GameObject track)
         {
-            this.data = new TriggerData();
+            this.data = new ComponentData();
             this.track = track; 
         }
 
         public Trigger()
         {
-            this.data = new TriggerData();
+            this.data = new ComponentData();
             track = TestGame.GetDefaultTriggerObject();
         }
 
-        public Trigger(TriggerData data)
+        public Trigger(ComponentData data)
         {
             track = TestGame.GetDefaultTriggerObject();
             this.data = data;

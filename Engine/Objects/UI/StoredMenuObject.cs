@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Engine.Objects.Components;
+using Engine.Objects.Components.UIComponents;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using static Engine.Objects.Components.Component;
 
 namespace Engine.Objects.UI
 {
@@ -19,12 +22,14 @@ namespace Engine.Objects.UI
 
         public int Layer { get; set; } = 4;
 
+        public List<ComponentData> buttons { get; set; } = new List<ComponentData>();
+
         public StoredMenuObject()
         {
             
         }
 
-        public StoredMenuObject(Vector2 pos, Vector2 scale, float rotation, string texture, int layer)
+        public StoredMenuObject(Vector2 pos, Vector2 scale, float rotation, string texture, int layer, List<Component> components)
         {
             xPos = pos.X;
             yPos = pos.Y;
@@ -37,6 +42,15 @@ namespace Engine.Objects.UI
             this.texture = texture;
 
             Layer = layer;
+
+            foreach (Component c in components)
+            {
+                if (c is Button)
+                {
+                    Button b = c as Button;
+                    buttons.Add(b.data);
+                }
+            }
         }
 
         public GameObject LoadObject(TestGame game)
@@ -44,6 +58,11 @@ namespace Engine.Objects.UI
             GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos), new Vector2(xScale, yScale), rotation, game.sr.verts, texture);
 
             game.Instantiate(myObject, Layer);
+
+            foreach (ComponentData b in buttons)
+            {
+                myObject.AddComponent(b.GenerateButtonFromData());
+            }
 
             return myObject;
         }

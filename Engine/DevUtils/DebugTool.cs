@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using Engine.Objects.UI;
 
 namespace Engine.DevUtils
 {
@@ -111,12 +112,7 @@ namespace Engine.DevUtils
                 if(!changeStage)
                 {
                     changeStage = true;
-                    int i = StageManager.stageId + 1;
-                    if(i >= StageManager.StageCount())
-                    {
-                        i = 0;
-                    }
-                    StageManager.LoadStage(i, game);
+                    LoadNextStage(game);
                 }
             }
             else
@@ -304,6 +300,26 @@ namespace Engine.DevUtils
             {
                 SaveDown = false;
             }
+        }
+
+        private void LoadNextStage(TestGame game, int increment = 0)
+        {
+            int i = StageManager.stageId + 1 + increment;
+            if (i >= StageManager.StageCount())
+            {
+                i = 0 + increment;
+            }
+
+
+            if (StageManager.GetStage(i).UI)
+            {
+                LoadNextStage(game, increment + 1);
+            }
+            else
+            {
+                StageManager.LoadStage(i, game);
+            }
+
         }
     }
 }
