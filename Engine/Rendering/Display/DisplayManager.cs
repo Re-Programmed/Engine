@@ -42,30 +42,46 @@ namespace Engine.Rendering.Display
             Glfw.SetWindowTitle(Window, title);
         }
 
-        public static unsafe void SetIcon(string file)
+        public static unsafe void SetIcon(string[] file)
         {
-            using (var stream = File.OpenRead(file))
+            GLFW.Image[] images = new GLFW.Image[file.Length];
+            int i = 0;
+            foreach (string s in file)
             {
-                ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
-
-                int width = image.Width;
-                int height = image.Height;
-
-                fixed (byte* bytePtr = image.Data)
+                using (var stream = File.OpenRead(s))
                 {
-                    int* intPtr = (int*)bytePtr;
+                    ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
 
-                    GLFW.Image[] images = new GLFW.Image[1] { new GLFW.Image(width, height, (IntPtr)intPtr) };
-                    Glfw.SetWindowIcon(Window, 1, images);
+                    int width = image.Width;
+                    int height = image.Height;
+
+                    fixed (byte* bytePtr = image.Data)
+                    {
+                        int* intPtr = (int*)bytePtr;
+
+                        images[i] = new GLFW.Image(width, height, (IntPtr)intPtr);
+                    }
+
                 }
+                i++;
 
             }
+
+            Glfw.SetWindowIcon(Window, images.Length, images);
         }
 
         public static void Fullscreen()
         {
             WindowSize = new Vector2(Glfw.PrimaryMonitor.WorkArea.Width, Glfw.PrimaryMonitor.WorkArea.Height);
             Glfw.SetWindowMonitor(Window, Glfw.PrimaryMonitor, 0, 0, (int)WindowSize.X, (int)WindowSize.Y, Glfw.GetVideoMode(Glfw.PrimaryMonitor).RefreshRate);
+        }
+
+        public static void UnFullscreen(int width, int height)
+        {
+            Rectangle screen = Glfw.PrimaryMonitor.WorkArea;
+            Glfw.SetWindowMonitor(Window, Monitor.None, (screen.Width - width) / 2, (screen.Height - height) / 2, width, height, Glfw.GetVideoMode(Glfw.PrimaryMonitor).RefreshRate);
+
+            WindowSize = new Vector2(width, height);
         }
 
         public static void CreateWindow(int width, int height, string title)
@@ -106,8 +122,8 @@ namespace Engine.Rendering.Display
             glViewport(0, 0, width, height);
             Glfw.SwapInterval(0); //Vsync off, 1 is on
 
+            SetIcon(new string[] { "../../../icons/128x128.png", "../../../icons/64x64.png", "../../../icons/32x32.png", "../../../icons/16x16.png", "../../../icons/8x8.png" });
             Fullscreen();
-            SetIcon("../../../textures/test_sp.png");
         }
 
         public static void CloseWindow()

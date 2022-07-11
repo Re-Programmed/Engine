@@ -21,12 +21,18 @@ namespace Engine.Objects.Components.UIComponents
 
         public override void Hover()
         {
+
             gameObject.color = SelectColor;
+            hovered = true;
+            
         }
 
         public override void ReleaseHover()
         {
+
             gameObject.color = Vector3.One;
+            hovered = false;
+            
         }
 
         public override Component.ComponentType GetComponentType()

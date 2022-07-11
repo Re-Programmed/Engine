@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="icons\" />
     <Folder Include="saves\" />
     <Folder Include="sounds\" />
     <Folder Include="textures\" />
