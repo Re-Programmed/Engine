@@ -42,7 +42,6 @@ namespace Engine.Rendering.Sprites
             this.Height = Height;
 
             glBindTexture(GL_TEXTURE_2D, ID);
-            Console.WriteLine("DATA: " + data.Length);
 
             GCHandle pinnedArray = GCHandle.Alloc(data, GCHandleType.Pinned);
             IntPtr pointer = pinnedArray.AddrOfPinnedObject();

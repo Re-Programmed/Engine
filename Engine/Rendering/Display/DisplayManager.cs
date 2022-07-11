@@ -1,7 +1,11 @@
-﻿using GLFW;
+﻿using Engine.Rendering.Sprites;
+using Engine.Resources;
+using GLFW;
+using StbImageSharp;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Numerics;
 using System.Text;
 using static Engine.OpenGL.GL;
@@ -36,6 +40,26 @@ namespace Engine.Rendering.Display
         public static void SetTitle(string title)
         {
             Glfw.SetWindowTitle(Window, title);
+        }
+
+        public static unsafe void SetIcon(string file)
+        {
+            using (var stream = File.OpenRead(file))
+            {
+                ImageResult image = ImageResult.FromStream(stream, ColorComponents.RedGreenBlueAlpha);
+
+                int width = image.Width;
+                int height = image.Height;
+
+                fixed (byte* bytePtr = image.Data)
+                {
+                    int* intPtr = (int*)bytePtr;
+
+                    GLFW.Image[] images = new GLFW.Image[1] { new GLFW.Image(width, height, (IntPtr)intPtr) };
+                    Glfw.SetWindowIcon(Window, 1, images);
+                }
+
+            }
         }
 
         public static void Fullscreen()
@@ -83,6 +107,7 @@ namespace Engine.Rendering.Display
             Glfw.SwapInterval(0); //Vsync off, 1 is on
 
             Fullscreen();
+            SetIcon("../../../textures/test_sp.png");
         }
 
         public static void CloseWindow()
