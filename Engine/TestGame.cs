@@ -15,11 +15,9 @@ using Engine.Objects.Components;
 using Engine.DevUtils;
 using Engine.Rendering;
 using Engine.Utils;
-using Engine.Resources;
 using Engine.SoundSys;
 using Engine.Physics;
 using Engine.Objects.Stages;
-using Engine.DevUtils;
 using Engine.GameFiles;
 using Engine.Objects.UI;
 using Engine.Resources.SaveData;
@@ -31,10 +29,10 @@ namespace Engine
     {
         public const bool DEVELOPER_MODE = true;
 
-        uint vao;
-        uint vbo;
+        //byte vao;
+        //byte vbo;
 
-        Shader shader;
+        //Shader shader;
 
         public SpriteRenderer sr { get; private set; }
 
@@ -65,6 +63,7 @@ namespace Engine
 
         protected unsafe override void Initalize()
         {
+            
             Engine.DiscordRPC.RPCManager.Initialize();
 
             /* Stage s = new Stage();

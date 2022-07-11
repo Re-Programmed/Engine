@@ -2,7 +2,6 @@
 using Engine;
 using Engine.Input;
 using Engine.Objects;
-using Engine.Objects.Components;
 using System;
 using System.Collections.Generic;
 using System.Numerics;

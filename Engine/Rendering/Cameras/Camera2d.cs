@@ -6,6 +6,8 @@ using GLFW;
 using Engine.Rendering.Display;
 using Engine.Game;
 
+#pragma warning disable
+
 namespace Engine.Rendering.Cameras
 {
     class Camera2d
