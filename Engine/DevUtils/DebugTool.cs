@@ -203,7 +203,6 @@ namespace Engine.DevUtils
                 if(!XDown)
                 {
                     XDown = true;
-                    Console.WriteLine(debugObjects.Count + "<=" + curobj);
                     if (debugObjects.Count <= curobj + 1)
                     {
                         curobj = 0;
@@ -239,14 +238,12 @@ namespace Engine.DevUtils
                             newphy.SetStatic(physics.settings.Static);
 
                             newSceneItem.AddComponent(newphy);
-                            Console.WriteLine("Added Component TYPE: " + c.GetComponentType());
                         }
                         else
                         {
                             if (c.GetComponentType() != Component.ComponentType.Script)
                             {
                                 newSceneItem.AddComponent(c.GetClone<Component>());
-                                Console.WriteLine("Added Component TYPE: " + c.GetComponentType());
                             }
                         }
                     }*/

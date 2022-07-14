@@ -25,8 +25,6 @@ namespace Engine.Rendering.Sprites
         {
             uint sVertex = 0, sFragment = 0, gShader = 0;
 
-            Console.WriteLine("VERTEX CODE:" + fragmentSource);
-
             sVertex = glCreateShader(GL_VERTEX_SHADER);
             glShaderSource(sVertex, vertexSource);
             glCompileShader(sVertex);

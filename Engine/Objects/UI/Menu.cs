@@ -15,7 +15,6 @@ namespace Engine.Objects.UI
 
         public static Menu CreateMenuFromFile(string fileData, string fileName)
         {
-            Console.WriteLine(fileData);
             Menu m = JsonSerializer.Deserialize<Menu>(fileData);
             m.Name = fileName;
             return m;
