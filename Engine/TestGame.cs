@@ -22,6 +22,7 @@ using Engine.GameFiles;
 using Engine.Objects.UI;
 using Engine.Resources.SaveData;
 using Engine.Objects.Components.UIComponents;
+using Engine.Resources.AchievementsSystem;
 
 namespace Engine
 {
@@ -61,16 +62,31 @@ namespace Engine
             Destroy(obj, obj.Layer);
         }
 
+        Achievement[] load_achievements = { new Achievement(0, "Test Achievement") };
+
+        void RegisterAchievements()
+        {
+            foreach(Achievement a in load_achievements)
+            {
+                AchievementManager.RegisterAchievement(a);
+            }
+
+        }
+
         protected unsafe override void Initalize()
         {
             
             Engine.DiscordRPC.RPCManager.Initialize();
 
+            AchievementManager.LoadAchievements();
+
+            RegisterAchievements();
+
             /* Stage s = new Stage();
              s.AddNewStageObject(new StageObject(new Vector2(0f, 100), new Vector2(40, 56), 0, "test_sp"));
              Stage.CreateFileFromStage(s);*/
-
-            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "test_sp");
+            
+            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "black");
             player.SetLayer(4);
             objects[4].objects.Add(player);
             player.AddComponent(new Player());
@@ -97,8 +113,8 @@ namespace Engine
             StageManager.LoadStagesFromFiles(this);
             MenuLoader.LoadMenusFromFiles(this);
 
-            MenuLoader.LoadMenu(0, this);
-
+            //MenuLoader.LoadMenu(0, this);
+            
         }
 
         protected unsafe override void LoadContent()
@@ -294,6 +310,8 @@ namespace Engine
         protected override void Close()
         {
             Engine.DiscordRPC.RPCManager.Deinitialize();
+
+            AchievementManager.SaveAchievements();
         }
     }
 }

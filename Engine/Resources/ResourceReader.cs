@@ -116,7 +116,13 @@ namespace Engine.Resources
         /// <returns>The object converted from in_s.</returns>
         static T JSONDeserialize<T>(string in_s)
         {
-            return JsonSerializer.Deserialize<T>(in_s);
+            try
+            {
+                return JsonSerializer.Deserialize<T>(in_s);
+            }catch(Exception e)
+            {
+                return default;
+            }
         }
     }
 }

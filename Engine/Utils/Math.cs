@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Engine.Utils
 {
-    class Math
+    static class Math
     {
         public static readonly Vector2 RightVector = new Vector2(1, 0);
         public static readonly Vector2 LeftVector = new Vector2(-1, 0);
@@ -19,5 +19,11 @@ namespace Engine.Utils
             return degrees * PI / 180;
         }
 
+        public static byte LimitIntToByte(int input)
+        {
+            input = System.Math.Clamp(input, 0, 255);
+
+            return (byte)input;
+        }
     }
 }
