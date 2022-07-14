@@ -113,7 +113,7 @@ namespace Engine
             StageManager.LoadStagesFromFiles(this);
             MenuLoader.LoadMenusFromFiles(this);
 
-            //MenuLoader.LoadMenu(0, this);
+            MenuLoader.LoadMenu(0, this);
             
         }
 

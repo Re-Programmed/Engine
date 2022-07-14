@@ -31,7 +31,7 @@ namespace Engine.Resources.AchievementsSystem
                 achievements.Add(achievement);
                 achievement.SetId(id);
 
-                if(!(achievements_status.Count > achievements.Count))
+                if(!(achievements_status.Count > achievements.Count - 1))
                 {
                     AchievementStatus a_as = new AchievementStatus();
                     achievements_status.Add(a_as);
@@ -47,6 +47,34 @@ namespace Engine.Resources.AchievementsSystem
         public static KeyValuePair<Achievement, AchievementStatus> GetAchievement(int id)
         {
             return new KeyValuePair<Achievement, AchievementStatus>(achievements[id], achievements_status[id]);
+        }
+
+        /// <summary>
+        /// Gets an achievement ID by its name. Returns -1 if no achievement has the specified name. 
+        /// </summary>
+        /// <param name="name">The name of the achievement to find.</param>
+        /// <returns>The achievement ID.</returns>
+        public static int GetAchievementByName(string name)
+        {
+            foreach(Achievement a in achievements)
+            {
+                if(a.Name == name)
+                {
+                    return a.GetId();
+                }
+            }
+
+            return -1;
+        }
+
+        public static void GrantAchievement(int id)
+        {
+            GrantAchievement(GetAchievement(id));          
+        }
+
+        public static void GrantAchievement(KeyValuePair<Achievement, AchievementStatus> achievement)
+        {
+            achievement.Value.Grant(achievement.Key);
         }
     }
 }

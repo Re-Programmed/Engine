@@ -8,5 +8,11 @@ namespace Engine.Resources.AchievementsSystem
     {
         public byte Id { get; set; }
         public bool Complete { get; set; } = false;
+
+        public void Grant(Achievement achievement)
+        {
+            Complete = true;
+            Console.WriteLine("You got the " + achievement.Name + " achievement.");
+        }
     }
 }
