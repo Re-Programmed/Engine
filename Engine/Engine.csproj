@@ -22,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="GameFiles\Audio\" />
+    <Folder Include="misc\" />
     <Folder Include="icons\" />
     <Folder Include="saves\" />
     <Folder Include="sounds\" />
