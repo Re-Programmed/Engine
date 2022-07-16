@@ -23,6 +23,7 @@ using Engine.Objects.UI;
 using Engine.Resources.SaveData;
 using Engine.Objects.Components.UIComponents;
 using Engine.Resources.AchievementsSystem;
+using Engine.Input.Utils;
 
 namespace Engine
 {
@@ -41,7 +42,10 @@ namespace Engine
 
         protected Camera2d camUI = new Camera2d(Vector2.Zero, 1f);
 
+#pragma warning disable CS0649
         static GameObject defaultTriggerObject;
+#pragma warning restore CS0649
+
         public static GameObject GetDefaultTriggerObject() { return defaultTriggerObject; }
 
         public TestGame(int initWindowWidth, int initWindowHeight, string initWindowTitle) : base(initWindowWidth, initWindowHeight, initWindowTitle)
@@ -75,10 +79,11 @@ namespace Engine
 
         protected unsafe override void Initalize()
         {
-            
             Engine.DiscordRPC.RPCManager.Initialize();
 
             AchievementManager.LoadAchievements();
+
+            KeybindManager.LoadKeybinds();
 
             RegisterAchievements();
 
@@ -86,7 +91,7 @@ namespace Engine
              s.AddNewStageObject(new StageObject(new Vector2(0f, 100), new Vector2(40, 56), 0, "test_sp"));
              Stage.CreateFileFromStage(s);*/
             
-            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "black");
+            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "test_sp");
             player.SetLayer(4);
             objects[4].objects.Add(player);
             player.AddComponent(new Player());
@@ -312,6 +317,8 @@ namespace Engine
             Engine.DiscordRPC.RPCManager.Deinitialize();
 
             AchievementManager.SaveAchievements();
+
+            KeybindManager.SaveKeybinds();
         }
     }
 }

@@ -24,9 +24,14 @@
   <ItemGroup>
     <Folder Include="GameFiles\Audio\" />
     <Folder Include="icons\" />
+    <Folder Include="misc\prefs\" />
     <Folder Include="saves\" />
     <Folder Include="sounds\" />
     <Folder Include="textures\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
 </Project>

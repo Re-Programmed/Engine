@@ -119,7 +119,9 @@ namespace Engine.Resources
             try
             {
                 return JsonSerializer.Deserialize<T>(in_s);
+#pragma warning disable CS0168
             }catch(Exception e)
+#pragma warning restore CS0168
             {
                 return default;
             }

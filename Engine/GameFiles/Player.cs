@@ -9,6 +9,7 @@ using System.Text;
 using Engine.Utils;
 using Engine.Game;
 using Engine.DevUtils;
+using Engine.Input.Utils;
 
 namespace Engine.GameFiles
 {
@@ -19,8 +20,6 @@ namespace Engine.GameFiles
         {
             comp = gameObject.GetComponent<Physics.PhysicsAffected>(Component.ComponentType.PhysicsRel);
         }
-
-        bool debug = false;
 
         public override void ScriptUpdate(TestGame game)
         {
@@ -43,10 +42,9 @@ namespace Engine.GameFiles
         float holdLengthD = 0.004f;
         float holdLengthA = 0.004f;
 
-
         public void CalcInputs()
         {
-            if (Input.Input.GetKey(GLFW.Keys.D))
+            if (KeybindManager.GetKeybind("forward"))
             {
                 gameObject.texture.flipped = false;
                 gameObject.Translate(Utils.Math.RightVector * 400f * GameTime.DeltaTime);
@@ -63,7 +61,7 @@ namespace Engine.GameFiles
                 holdLengthD = 0.004f;
             }
 
-            if (Input.Input.GetKey(GLFW.Keys.A))
+            if (KeybindManager.GetKeybind("backward"))
             {
                 gameObject.texture.flipped = true;
                 gameObject.Translate(Utils.Math.LeftVector * 400f * GameTime.DeltaTime);
@@ -79,7 +77,7 @@ namespace Engine.GameFiles
                 holdLengthA = 0.004f;
             }
 
-            if (Input.Input.GetKey(GLFW.Keys.W) && comp.collisionOnTop)
+            if (KeybindManager.GetKeybind("jump") && comp.collisionOnTop)
             {
                 comp.velocity.AddVelocity(new Vector2(0, -0.3f));
             }
