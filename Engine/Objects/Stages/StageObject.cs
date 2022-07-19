@@ -30,6 +30,24 @@ namespace Engine.Objects.Stages
         public List<ComponentData> triggers { get; set; } = new List<ComponentData>();
 
         public Physics.PhysicsObjectSettings PhysicsSettings { get; set; }
+
+        internal StageObject SetPositionScaleAndRotation(Vector2 position, Vector2 scale, float rotation)
+        {
+            this.xPos = position.X;
+            this.yPos = position.Y;
+            this.xScale = scale.X;
+            this.yScale = scale.Y;
+            this.rotation = rotation;
+
+            return this;
+        }
+
+        internal StageObject SetLayer(int layer)
+        {
+            this.Layer = layer;
+            return this;
+        }
+
         public StageObject(Vector2 position, Vector2 scale, float rotation, string textureName, int layer, List<Component> components)
         {
             xPos = position.X;

@@ -87,6 +87,8 @@ namespace Engine
 
             RegisterAchievements();
 
+            StoredIDObject.LoadStoredObjects();
+
             /* Stage s = new Stage();
              s.AddNewStageObject(new StageObject(new Vector2(0f, 100), new Vector2(40, 56), 0, "test_sp"));
              Stage.CreateFileFromStage(s);*/

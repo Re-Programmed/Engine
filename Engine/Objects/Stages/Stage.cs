@@ -12,6 +12,9 @@ namespace Engine.Objects.Stages
     class Stage
     {
         public List<StageObject> stageObjects { get; set; } = new List<StageObject>();
+
+        public List<LoadableStoredObject> stageIDObjects { get; set; } = new List<LoadableStoredObject>();
+
         public string Name { get; set; }
 
         public bool UI { get; set; } = false;
@@ -59,6 +62,11 @@ namespace Engine.Objects.Stages
             foreach (StageObject obj in stageObjects)
             {
                 obj.LoadObject(game);
+            }
+
+            foreach(LoadableStoredObject lso in stageIDObjects)
+            {
+                lso.GetObject().LoadObject(game);
             }
         }
     }

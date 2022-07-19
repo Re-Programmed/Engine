@@ -1,1 +1,1 @@
-{"stageObjects":[{"xPos":-512,"yPos":-344,"xScale":1024,"yScale":688,"rotation":0,"texture":"sky","Layer":1,"physics":false,"triggers":[],"PhysicsSettings":null}],"Name":"default","UI":true}
+{"stageIDObjects": [{"i": 0, "px": -512, "py": -344, "sx": 2000, "sy": 2000, "r": 0, "l": 1}], "stageObjects":[{"xPos":-512,"yPos":-344,"xScale":1024,"yScale":688,"rotation":0,"texture":"sky","Layer":1,"physics":false,"triggers":[],"PhysicsSettings":null}],"Name":"default","UI":true}
