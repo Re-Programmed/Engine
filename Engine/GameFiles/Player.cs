@@ -47,7 +47,7 @@ namespace Engine.GameFiles
             if (KeybindManager.GetKeybind("forward"))
             {
                 gameObject.texture.flipped = false;
-                gameObject.Translate(Utils.Math.RightVector * 400f * GameTime.DeltaTime);
+                gameObject.Translate(Utils.Math.RightVector * 400f * GameTime.DeltaTimeScale());
                 /*holdLengthD += 0.0000004f;
                 if(holdLengthD > 0.01f)
                 {
@@ -64,7 +64,7 @@ namespace Engine.GameFiles
             if (KeybindManager.GetKeybind("backward"))
             {
                 gameObject.texture.flipped = true;
-                gameObject.Translate(Utils.Math.LeftVector * 400f * GameTime.DeltaTime);
+                gameObject.Translate(Utils.Math.LeftVector * 400f * GameTime.DeltaTimeScale());
                 /*holdLengthA += 0.0000004f;
                 if (holdLengthA > 0.01f)
                 {

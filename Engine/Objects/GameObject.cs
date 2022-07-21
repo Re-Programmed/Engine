@@ -86,7 +86,23 @@ namespace Engine.Objects
 
             Init();
         }
-        
+
+        public void DestroyWithChildren(TestGame game)
+        {
+            if(children.Count != 0)
+            {
+                foreach (GameObject c in children)
+                {
+                    if (c != null)
+                    {
+                        c.DestroyWithChildren(game);
+                    }
+                }
+            }
+
+            game.Destroy(this);
+        }
+
         public void SetAlwaysLoad(bool value)
         {
             AlwaysLoad = value;

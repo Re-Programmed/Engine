@@ -24,6 +24,7 @@ using Engine.Resources.SaveData;
 using Engine.Objects.Components.UIComponents;
 using Engine.Resources.AchievementsSystem;
 using Engine.Input.Utils;
+using Engine.GameFiles.Menus;
 
 namespace Engine
 {
@@ -230,6 +231,8 @@ namespace Engine
 
         protected override void Update()
         {
+            PauseMenuManager.UpdateCheckKey(this);
+
             if(clearUI)
             {
                 foreach (ObjectLayer ol in UI.Values)

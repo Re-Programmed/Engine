@@ -53,7 +53,7 @@ namespace Engine.Objects.UI
             }
         }
 
-        public GameObject LoadObject(TestGame game)
+        public GameObject LoadObject(TestGame game, GameObject parent = null)
         {
             GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos), new Vector2(xScale, yScale), rotation, game.sr.verts, texture);
 
@@ -63,6 +63,8 @@ namespace Engine.Objects.UI
             {
                 myObject.AddComponent(b.GenerateButtonFromData());
             }
+
+            parent?.AddChild(myObject);
 
             return myObject;
         }
