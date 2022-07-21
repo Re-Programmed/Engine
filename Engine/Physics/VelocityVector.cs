@@ -1,4 +1,5 @@
-﻿using Engine.Objects;
+﻿using Engine.Game;
+using Engine.Objects;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -28,7 +29,7 @@ namespace Engine.Physics
 
         public void AddVelocity(Vector2 velocity)
         {
-            this.velocity = ClampVelocity(this.velocity + velocity);
+            this.velocity = ClampVelocity(this.velocity + velocity) * GameTime.TimeScale;
         }
 
         public void SendFrameVelocityData(GameObject obj)

@@ -44,5 +44,19 @@ namespace Engine.Objects.UI
                 i++;
             }
         }
+
+        public static void LoadMenu(string id, TestGame game, GameObject parent)
+        {
+            int i = 0;
+            foreach (Menu m in menus)
+            {
+                if (m.Name == id)
+                {
+                    m.LoadMenu(game, parent);
+                    return;
+                }
+                i++;
+            }
+        }
     }
 }
