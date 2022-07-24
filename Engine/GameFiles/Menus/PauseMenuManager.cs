@@ -21,6 +21,7 @@ namespace Engine.GameFiles.Menus
 
         public static void OpenPauseMenu(TestGame game)
         {
+            SoundSys.SoundManager.PauseAllSounds();
             menuOpen = true;
 
             menu = GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One, 0f, game.sr.verts, "none");
@@ -34,6 +35,7 @@ namespace Engine.GameFiles.Menus
 
         public static void ClosePauseMenu(TestGame game)
         {
+            SoundSys.SoundManager.ResumeAllSounds();
             menuOpen = false;
             if(menu != null)
             {

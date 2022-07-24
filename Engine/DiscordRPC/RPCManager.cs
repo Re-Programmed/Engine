@@ -17,7 +17,7 @@ namespace Engine.DiscordRPC
 		{
 			client = new DiscordRpcClient("995784691179331584");
 
-			client.Logger = new ConsoleLogger() { Level = LogLevel.Warning };
+			client.Logger = new ConsoleLogger() { Level = LogLevel.None };
 
 			client.OnReady += (sender, e) =>
 			{

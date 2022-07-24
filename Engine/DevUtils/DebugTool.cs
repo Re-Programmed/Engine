@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
 using Engine.Objects.UI;
+using Engine.SoundSys;
+using Engine.Resources.SoundSys.SoundGroups;
 
 namespace Engine.DevUtils
 {
@@ -121,7 +123,7 @@ namespace Engine.DevUtils
 
             bool resetLock = true;
 
-            if(Input.Input.GetKey(GLFW.Keys.D))
+            if (Input.Input.GetKey(GLFW.Keys.D))
             {
                 resetLock = false;
                 if(lockToAxis)

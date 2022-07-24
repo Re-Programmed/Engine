@@ -124,7 +124,8 @@ namespace Engine
             MenuLoader.LoadMenusFromFiles(this);
 
             MenuLoader.LoadMenu(0, this);
-            
+
+            SoundManager.GetSoundById("t_title").Play();
         }
 
         protected unsafe override void LoadContent()
