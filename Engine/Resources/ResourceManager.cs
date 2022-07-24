@@ -113,8 +113,9 @@ namespace Engine.Resources
 
                 width = image.Width;
                 height = image.Height;
-                
+
                 texture.Generate(width, height, image.Data);
+               
                 return texture;
             }
         }

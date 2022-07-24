@@ -33,12 +33,12 @@ namespace Engine.Objects.Components.UIComponents
 
         public void OnDisable(TestGame game)
         {
-
+            buttons_ordered.Remove(this);
         }
 
         public void OnReEnable(TestGame game)
         {
-
+            buttons_ordered.Add(this);
         }
 
         /// <summary>

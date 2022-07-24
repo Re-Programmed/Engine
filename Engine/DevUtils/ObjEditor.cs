@@ -14,7 +14,7 @@ namespace Engine.DevUtils
 
         static GameObject selectedObject;
 
-        public static void Update(Game.Game game)
+        public static void Update(TestGame game)
         {
             Vector2 smouse = game.cam.MouseToWorldCoords(Input.Input.GetMousePosition());
 
@@ -63,7 +63,7 @@ namespace Engine.DevUtils
 
                     selectedObject.RemoveChild(obj);
 
-                    selectedObject.Destroy();
+                    selectedObject.Destroy(game);
 
                     game.objects[5].objects.Remove(selectedObject);
 

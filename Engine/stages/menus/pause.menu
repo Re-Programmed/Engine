@@ -1,1 +1,1 @@
-﻿{"components":[{"xPos":0,"yPos":0,"xScale":100,"yScale":100,"rotation":0,"texture":"black","Layer":4, "buttons":[{"type":5,"i1":1}]}],"Name":"pause"}
+﻿{"components":[{"xPos":-256,"yPos":-172,"xScale":512,"yScale":344,"rotation":0,"texture":"sky","Layer":4, "buttons":[]}, {"xPos":-40.5,"yPos":-20.5,"xScale":81,"yScale":41,"rotation":0,"texture":"m_pause_quit","Layer":4, "buttons":[{"type":6,"i1":0}]}],"Name":"pause"}

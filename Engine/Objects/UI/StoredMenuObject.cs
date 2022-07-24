@@ -55,7 +55,7 @@ namespace Engine.Objects.UI
 
         public GameObject LoadObject(TestGame game, GameObject parent = null)
         {
-            GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos), new Vector2(xScale, yScale), rotation, game.sr.verts, texture);
+            GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos) + game.cam.FocusPosition, new Vector2(xScale, yScale) * game.cam.Zoom, rotation, game.sr.verts, texture);
 
             game.Instantiate(myObject, Layer);
 

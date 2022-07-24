@@ -27,7 +27,7 @@
     <Folder Include="misc\prefs\" />
     <Folder Include="saves\" />
     <Folder Include="sounds\" />
-    <Folder Include="textures\" />
+    <Folder Include="textures\text\menus\pause\" />
   </ItemGroup>
 
   <ItemGroup>

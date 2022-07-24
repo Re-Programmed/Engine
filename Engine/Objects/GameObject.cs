@@ -309,9 +309,9 @@ namespace Engine.Objects
             child.parent = null;
         }
 
-        public virtual void Destroy()
+        public virtual void Destroy(TestGame game)
         {
-
+            OnDisable(game);
         }
     }
 }

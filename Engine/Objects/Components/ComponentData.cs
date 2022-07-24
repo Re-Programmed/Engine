@@ -24,12 +24,21 @@ namespace Engine.Objects.Components
             return null;
         }
 
+        /// <summary>
+        /// Returns a class corrasponding to the ComponentType enum.
+        /// </summary>
         public Button GenerateButtonFromData()
         {
             if(type == ComponentType.UI_Button_Stage)
             {
                 StageButton bs = new StageButton(this);
                 return bs;
+            }
+
+            if(type == ComponentType.UI_Button_Close)
+            {
+                QuitButton qb = new QuitButton(this);
+                return qb;
             }
 
             return null;

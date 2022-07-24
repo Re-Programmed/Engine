@@ -13,7 +13,8 @@ namespace Engine.Objects.Components
             Script,
             PhysicsRel,
             Trigger_Layer,
-            UI_Button_Stage
+            UI_Button_Stage,
+            UI_Button_Close
         }
 
         public abstract ComponentType GetComponentType();

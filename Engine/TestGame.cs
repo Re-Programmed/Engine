@@ -30,6 +30,8 @@ namespace Engine
 {
     class TestGame : Game.Game
     {
+        public static TestGame INSTANTCE;
+
         public const bool DEVELOPER_MODE = true;
 
         //byte vao;
@@ -57,7 +59,7 @@ namespace Engine
         public static void Destroy(GameObject obj, int layer)
         {
             removeObjects.Add(new IDObject(GenerateUUIDDestroyable(), obj), layer);
-            obj.Destroy();
+            obj.Destroy(TestGame.INSTANTCE);
         }
 
 
@@ -127,6 +129,8 @@ namespace Engine
 
         protected unsafe override void LoadContent()
         {
+            INSTANTCE = this;
+
             SoundManager.InitAllSounds();
 
             objects.Add(0, new ObjectLayer());
@@ -237,13 +241,18 @@ namespace Engine
             {
                 foreach (ObjectLayer ol in UI.Values)
                 {
+                    foreach(GameObject obj in ol.objects)
+                    {
+                        obj.Destroy(this);
+                    }
                     ol.objects.Clear();
                 }
                 clearUI = false;
             }
 
             foreach (KeyValuePair<IDObject, int> destroyobj in removeObjects)
-            { 
+            {
+                destroyobj.Key.gameObject.Destroy(this);
                 objects[destroyobj.Value].objects.Remove(destroyobj.Key.gameObject);
             }
 
