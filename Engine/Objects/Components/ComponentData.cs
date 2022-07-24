@@ -29,19 +29,15 @@ namespace Engine.Objects.Components
         /// </summary>
         public Button GenerateButtonFromData()
         {
-            if(type == ComponentType.UI_Button_Stage)
+            switch(type)
             {
-                StageButton bs = new StageButton(this);
-                return bs;
+                case ComponentType.UI_Button_Close:
+                    return new QuitButton(this);
+                case ComponentType.UI_Button_Stage:
+                    return new StageButton(this);
+                default:
+                    return null;
             }
-
-            if(type == ComponentType.UI_Button_Close)
-            {
-                QuitButton qb = new QuitButton(this);
-                return qb;
-            }
-
-            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Engine.Input.Utils;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
@@ -108,6 +109,14 @@ namespace Engine.Objects.Components.UIComponents
             else
             {
                 backTrackDown = false;
+            }
+
+            if(KeybindManager.GetKeybind("button_s"))
+            {
+                if(currentSelection > -1 && currentSelection < Button.buttons_ordered.Count)
+                {
+                    Button.buttons_ordered[currentSelection].Click(game);
+                }
             }
         }
     }
