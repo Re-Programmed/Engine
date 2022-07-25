@@ -48,6 +48,7 @@ namespace Engine.Objects.Stages
 
         public void LoadStage(TestGame game)
         {
+            Game.GameTime.TimeScale = 1f;
             foreach (ObjectLayer l in game.objects.Values)
             {
                 foreach(GameObject obj in l.objects)

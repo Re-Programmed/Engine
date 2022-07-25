@@ -36,6 +36,9 @@ namespace Engine.Objects
 
         public bool Loaded = false;
 
+        public delegate void Destroyed();
+        public Destroyed OnDestroy;
+
         public ObjectTexture texture { get; private set; }
 
         public GameObject GetMemberwiseClone()
@@ -312,6 +315,8 @@ namespace Engine.Objects
         public virtual void Destroy(TestGame game)
         {
             OnDisable(game);
+
+            OnDestroy?.Invoke();
         }
     }
 }

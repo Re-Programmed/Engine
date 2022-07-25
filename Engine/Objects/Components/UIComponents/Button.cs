@@ -83,7 +83,7 @@ namespace Engine.Objects.Components.UIComponents
             {
                 Vector2 mousePosition = game.cam.MouseToWorldCoords(Input.Input.GetMousePosition());
 
-                if (Vector2.Distance(gameObject.position + (gameObject.scale/2f), mousePosition) <= gameObject.scale.X)
+                if (CheckPositionInside(mousePosition))
                 {
                     Hover();
                     if (Input.Input.GetMouseButton(GLFW.MouseButton.Left))
@@ -96,6 +96,18 @@ namespace Engine.Objects.Components.UIComponents
                     ReleaseHover();
                 }
             }
+        }
+
+        bool CheckPositionInside(Vector2 position)
+        {
+            if (Math.Abs(position.X - (gameObject.position.X + gameObject.scale.X/2f)) <= gameObject.scale.X / 2f)
+            {
+                if (Math.Abs(position.Y - (gameObject.position.Y + gameObject.scale.Y * 1.5f)) <= gameObject.scale.Y / 2f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public Button(ComponentData data)

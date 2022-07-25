@@ -25,6 +25,7 @@ namespace Engine.GameFiles.Menus
             menuOpen = true;
 
             menu = GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One, 0f, game.sr.verts, "none");
+            menu.OnDestroy += MenuDestroy;
 
             game.Instantiate(menu, 4);
 
@@ -33,10 +34,14 @@ namespace Engine.GameFiles.Menus
             GameTime.TimeScale = 0f;
         }
 
+        static void MenuDestroy()
+        {
+            menuOpen = false;
+        }
+
         public static void ClosePauseMenu(TestGame game)
         {
             SoundSys.SoundManager.ResumeAllSounds();
-            menuOpen = false;
             if(menu != null)
             {
                 menu.DestroyWithChildren(game);
