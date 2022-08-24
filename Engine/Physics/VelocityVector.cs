@@ -57,5 +57,10 @@ namespace Engine.Physics
             }
             return velocity;
         }
+
+        internal void SetVelocity(float v1, float v2)
+        {
+            SetVelocity(new Vector2(v1, v2));
+        }
     }
 }

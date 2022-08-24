@@ -6,13 +6,15 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <Nullable>annotations</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -27,11 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GameFiles\Audio\" />
     <Folder Include="icons\" />
     <Folder Include="misc\prefs\" />
+    <Folder Include="Properties\" />
     <Folder Include="saves\" />
-    <Folder Include="sounds\" />
     <Folder Include="textures\text\menus\pause\" />
   </ItemGroup>
 

@@ -53,9 +53,11 @@ namespace Engine.Objects.UI
             }
         }
 
-        public GameObject LoadObject(TestGame game, GameObject parent = null)
+        public GameObject LoadObject(TestGame game, GameObject parent = null, bool camRelative = true)
         {
-            GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos) + game.cam.FocusPosition, new Vector2(xScale, yScale) * game.cam.Zoom, rotation, game.sr.verts, texture);
+            GameObject myObject = GameObject.CreateGameObjectSprite(new Vector2(xPos, yPos) + (camRelative ? game.cam.FocusPosition : Vector2.Zero), new Vector2(xScale, yScale) * (camRelative ? game.cam.Zoom : 1f), rotation, game.sr.verts, texture);
+
+            myObject.SetAlwaysLoad(true);
 
             game.Instantiate(myObject, Layer);
 

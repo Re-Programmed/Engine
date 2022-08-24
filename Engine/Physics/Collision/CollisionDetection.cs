@@ -38,7 +38,7 @@ namespace Engine.Physics.Collision
                         if (pushCheck > cal)
                         {
                             pushCheck = cal;
-                            pushOut.Y = (centerDistanceY + scalePushDistanceY) + 0.01f;
+                            pushOut.Y = (centerDistanceY + scalePushDistanceY);
                         }
                     }
 
@@ -48,7 +48,7 @@ namespace Engine.Physics.Collision
                         if (pushCheck > cal)
                         {
                             pushCheck = cal;
-                            pushOut.Y = -(scalePushDistanceY - centerDistanceY) - 0.01f;
+                            pushOut.Y = -(scalePushDistanceY - centerDistanceY);
                         }
                     }
 
@@ -59,7 +59,7 @@ namespace Engine.Physics.Collision
                         {
                             pushCheck = cal;
                             pushOut.Y = 0f;
-                            pushOut.X = -(centerDistanceX + scalePushDistanceX) + 9.01f;
+                            pushOut.X = -(centerDistanceX + scalePushDistanceX);
                         }
                     }
                     
@@ -69,7 +69,7 @@ namespace Engine.Physics.Collision
                         if (pushCheck > cal)
                         {
                             pushOut.Y = 0f;
-                            pushOut.X = (scalePushDistanceX - centerDistanceX) + 0.01f;
+                            pushOut.X = (scalePushDistanceX - centerDistanceX);
                         }
                     }
                 }

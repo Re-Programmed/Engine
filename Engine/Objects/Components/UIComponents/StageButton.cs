@@ -17,7 +17,7 @@ namespace Engine.Objects.Components.UIComponents
         {
             MenuLoader.ClearMenu(game);
             Stages.StageManager.LoadStage(data.i1, game);
-            SoundSys.SoundManager.StopAllSounds();
+            TestGame.GetDefaultTriggerObject().SetPosition(Vector2.Zero);
         }
 
         public override void Hover()

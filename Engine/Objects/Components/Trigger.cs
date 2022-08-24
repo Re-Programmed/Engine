@@ -93,5 +93,16 @@ namespace Engine.Objects.Components
         /// What happens when the target intersects with this trigger.
         /// </summary>
         public abstract void OnTrigger();
+
+
+        public Component SetComponentData(ComponentData data)
+        {
+            return this;
+        }
+
+        public ComponentData GetComponentData()
+        {
+            return null;
+        }
     }
 }

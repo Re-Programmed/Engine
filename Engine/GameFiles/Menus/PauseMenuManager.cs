@@ -1,4 +1,5 @@
 ﻿using Engine.Game;
+using Engine.GameFiles.Audio.MusicSync;
 using Engine.Input.Utils;
 using Engine.Objects;
 using Engine.Objects.Stages;
@@ -22,9 +23,11 @@ namespace Engine.GameFiles.Menus
         public static void OpenPauseMenu(TestGame game)
         {
             SoundSys.SoundManager.PauseAllSounds();
+            MusicTick.PauseUpdateTick(true);
             menuOpen = true;
 
             menu = GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One, 0f, game.sr.verts, "none");
+            menu.SetAlwaysLoad(true);
             menu.OnDestroy += MenuDestroy;
 
             game.Instantiate(menu, 4);
@@ -42,7 +45,8 @@ namespace Engine.GameFiles.Menus
         public static void ClosePauseMenu(TestGame game)
         {
             SoundSys.SoundManager.ResumeAllSounds();
-            if(menu != null)
+            MusicTick.PauseUpdateTick(false);
+            if (menu != null)
             {
                 menu.DestroyWithChildren(game);
             }

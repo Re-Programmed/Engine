@@ -49,23 +49,33 @@ namespace Engine.Physics
 
         public void Update(TestGame game)
         {
+            if (GameTime.TimeScale == 0) { return; }
             collider.UpdateCenter(gameObject.position);
             
             if(!settings.Static)
             {
                 if (settings.Gravity)
                 {
-                    velocity.AddVelocity(new Vector2(settings.GravityDirectionX, settings.GravityDirectionY) * settings.GravityStrength * 0.001f);
+                    velocity.AddVelocity(new Vector2(settings.GravityDirectionX, settings.GravityDirectionY) * settings.GravityStrength * 0.001f * GameTime.TimeScale);
                 }
 
-                if(velocity.GetVelocity().X < 0)
+                bool airres = false;
+
+                if(velocity.GetVelocity().X < -0.001f)
                 {
-                    velocity.AddVelocity(Utils.Math.RightVector * settings.AirResistance);
+                    velocity.AddVelocity(Utils.Math.RightVector * settings.AirResistance * GameTime.TimeScale);
+                    airres = true;
                 }
 
-                if (velocity.GetVelocity().X > 0)
+                if (velocity.GetVelocity().X > 0.001f)
                 {
-                    velocity.AddVelocity(Utils.Math.LeftVector * settings.AirResistance);
+                    velocity.AddVelocity(Utils.Math.LeftVector * settings.AirResistance * GameTime.TimeScale);
+                    airres = true;
+                }
+
+                if(!airres)
+                {
+                    velocity.SetVelocity(0f, velocity.GetVelocity().Y);
                 }
 
                 Vector2 col = collider.getActiveCollisions();
@@ -83,7 +93,22 @@ namespace Engine.Physics
                 if (col.X != 0)
                 {
                     gameObject.Translate(col);
-                    velocity.SetVelocity(new Vector2(0, velocity.GetVelocity().Y));
+
+                    if(col.X < 0)
+                    {
+                        if(velocity.GetVelocity().X > 0)
+                        {
+                            velocity.SetVelocity(new Vector2(0, velocity.GetVelocity().Y));
+                        }
+                    }
+
+                    if(col.X > 0)
+                    {
+                        if(velocity.GetVelocity().X < 0)
+                        {
+                            velocity.SetVelocity(new Vector2(0, velocity.GetVelocity().Y));
+                        }
+                    }
                 }
 
                 velocity.SendFrameVelocityData(gameObject);
@@ -102,6 +127,21 @@ namespace Engine.Physics
         public T GetClone<T>()
         {
             return (T)MemberwiseClone();
+        }
+
+        protected ComponentData myData;
+
+        public Component SetComponentData(ComponentData data)
+        {
+            myData = data;
+            data.type = GetComponentType();
+            return this;
+        }
+
+        public ComponentData GetComponentData()
+        {
+            if (myData == null) { return new ComponentData(); }
+            return myData;
         }
     }
 }

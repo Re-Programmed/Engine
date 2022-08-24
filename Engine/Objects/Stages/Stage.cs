@@ -11,9 +11,17 @@ namespace Engine.Objects.Stages
 {
     class Stage
     {
+        public delegate void StageLoaded();
+
+        /// <summary>
+        /// Called on stage load. Can be used to do things on load such as play music etc.
+        /// </summary>
+        public StageLoaded OnLoadStage;
+
         public List<StageObject> stageObjects { get; set; } = new List<StageObject>();
 
         public List<LoadableStoredObject> stageIDObjects { get; set; } = new List<LoadableStoredObject>();
+
 
         public string Name { get; set; }
 
@@ -67,8 +75,13 @@ namespace Engine.Objects.Stages
 
             foreach(LoadableStoredObject lso in stageIDObjects)
             {
-                lso.GetObject().LoadObject(game);
+                if(!StageManager.LoadFromStorage(lso))
+                {
+                    lso.GetObject().LoadObject(game);
+                }
             }
+
+            OnLoadStage?.Invoke();
         }
     }
 }

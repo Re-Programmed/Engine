@@ -51,5 +51,15 @@ namespace Engine.Objects.Components
         {
             return (T)MemberwiseClone();
         }
+
+        public Component SetComponentData(ComponentData data)
+        {
+            return this;
+        }
+
+        public ComponentData GetComponentData()
+        {
+            return null;
+        }
     }
 }

@@ -21,9 +21,9 @@ namespace Engine.Objects.UI
             menus = menusTemp.ToArray();
         }
 
-        public static void LoadMenu(int id, TestGame game)
+        public static void LoadMenu(int id, TestGame game, bool camRelative = true)
         {
-            menus[id].LoadMenu(game);
+            menus[id].LoadMenu(game, null, camRelative); 
         }
 
         public static void ClearMenu(TestGame game)
@@ -31,28 +31,28 @@ namespace Engine.Objects.UI
             game.ClearUI();
         }
 
-        public static void LoadMenu(string id, TestGame game)
+        public static void LoadMenu(string id, TestGame game, bool camRelative = true)
         {
             int i = 0;
             foreach (Menu m in menus)
             {
                 if (m.Name == id)
                 {
-                    m.LoadMenu(game);
+                    m.LoadMenu(game, null, camRelative);
                     return;
                 }
                 i++;
             }
         }
 
-        public static void LoadMenu(string id, TestGame game, GameObject parent)
+        public static void LoadMenu(string id, TestGame game, GameObject parent, bool camRelative = true)
         {
             int i = 0;
             foreach (Menu m in menus)
             {
                 if (m.Name == id)
                 {
-                    m.LoadMenu(game, parent);
+                    m.LoadMenu(game, parent, camRelative);
                     return;
                 }
                 i++;

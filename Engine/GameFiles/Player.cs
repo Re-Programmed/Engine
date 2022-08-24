@@ -23,11 +23,19 @@ namespace Engine.GameFiles
 
         public override void ScriptUpdate(TestGame game)
         {
+            game.cam.LerpTwards(gameObject.position, 0.01f);
+            if(gameObject.position.Y > 500)
+            {
+                gameObject.SetPosition(new Vector2(gameObject.position.X, -500));
+            }
             if (Input.Input.GetKey(GLFW.Keys.L))
             {
-                gameObject.AddComponent(new DebugTool());
-                gameObject.RemoveComponent(comp);
-                gameObject.RemoveComponent(this);
+                if(TestGame.INSTANCE.DEVELOPER_MODE)
+                {
+                    gameObject.AddComponent(new DebugTool());
+                    gameObject.RemoveComponent(comp);
+                    gameObject.RemoveComponent(this);
+                }
             }
             if (comp == null)
             {
@@ -42,12 +50,21 @@ namespace Engine.GameFiles
         float holdLengthD = 0.004f;
         float holdLengthA = 0.004f;
 
+        const float Speed = 0.0025f;
+        const float VelocityCap = 0.5f;
+
         public void CalcInputs()
         {
             if (KeybindManager.GetKeybind("forward"))
             {
                 gameObject.texture.flipped = false;
-                gameObject.Translate(Utils.Math.RightVector * 400f * GameTime.DeltaTimeScale());
+                comp.velocity.AddVelocity(Utils.Math.RightVector * Speed * GameTime.TimeScale);
+
+                if (comp.velocity.GetVelocity().X > VelocityCap)
+                {
+                    comp.velocity.SetVelocity(VelocityCap, comp.velocity.GetVelocity().Y);
+                }
+             
                 /*holdLengthD += 0.0000004f;
                 if(holdLengthD > 0.01f)
                 {
@@ -64,7 +81,13 @@ namespace Engine.GameFiles
             if (KeybindManager.GetKeybind("backward"))
             {
                 gameObject.texture.flipped = true;
-                gameObject.Translate(Utils.Math.LeftVector * 400f * GameTime.DeltaTimeScale());
+                comp.velocity.AddVelocity(Utils.Math.LeftVector * Speed * GameTime.TimeScale);
+
+                if (comp.velocity.GetVelocity().X < -VelocityCap)
+                {
+                    comp.velocity.SetVelocity(-VelocityCap, comp.velocity.GetVelocity().Y);
+                }
+
                 /*holdLengthA += 0.0000004f;
                 if (holdLengthA > 0.01f)
                 {

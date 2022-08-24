@@ -54,17 +54,32 @@ namespace Engine.Objects.Components.UIComponents
 
         static void SelectCurrent()
         {
-            if (currentSelection != -1)
+            try
             {
-                Button.buttons_ordered[currentSelection].Select();
+                if (currentSelection != -1)
+                {
+                    Button.buttons_ordered[currentSelection].Select();
+                }
+            }
+            catch(Exception e)
+            {
+                //Button is gone
+                currentSelection = -1;
             }
         }
 
         static void DeselectCurrent()
         {
-            if (currentSelection != -1)
+            try
             {
-                Button.buttons_ordered[currentSelection].Deselect();
+                if (currentSelection != -1)
+                {
+                    Button.buttons_ordered[currentSelection].Deselect();
+                }
+            }catch(Exception e)
+            {
+                //Button is gone
+                currentSelection = -1;
             }
         }
 

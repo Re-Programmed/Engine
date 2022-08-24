@@ -141,5 +141,20 @@ namespace Engine.Objects.Components
         {
             return (T)MemberwiseClone();
         }
+
+        protected ComponentData myData;
+
+        public Component SetComponentData(ComponentData data)
+        {
+            myData = data;
+            data.type = GetComponentType();
+            return this;
+        }
+
+        public ComponentData GetComponentData()
+        {
+            if (myData == null) { return new ComponentData(); }
+            return myData;
+        }
     }
 }

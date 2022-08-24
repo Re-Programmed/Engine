@@ -49,10 +49,11 @@ namespace Engine.Physics.Collision
                 if (colCheck == this) { continue; }
                 
                 Vector2 d = CollisionDetection.DetectCollision(this, colCheck);
-                if (d.Y != 0 || d.X != 0)
+                if(d.Y != 0 || d.X != 0)
                 {
                     return d;
                 }
+
             }
 
             return Vector2.Zero;

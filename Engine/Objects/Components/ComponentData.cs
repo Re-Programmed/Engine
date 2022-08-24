@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Engine.GameFiles;
 using static Engine.Objects.Components.Component;
 
 namespace Engine.Objects.Components
@@ -12,6 +13,16 @@ namespace Engine.Objects.Components
         public Component.ComponentType type { get; set; }
 
         public int i1 { get; set; } = 0;
+
+        public ComponentData()
+        {
+
+        }
+
+        public ComponentData(ComponentType type)
+        {
+            this.type = type;
+        }
 
         public Trigger GenerateTriggerFromData()
         {
@@ -35,6 +46,17 @@ namespace Engine.Objects.Components
                     return new QuitButton(this);
                 case ComponentType.UI_Button_Stage:
                     return new StageButton(this);
+                default:
+                    return null;
+            }
+        }
+
+        internal Component GenerateGeneralFromData()
+        {
+            switch(type)
+            {
+                case ComponentType.Interactable_Slots:
+                    return new GameFiles.Interactables.SlotMachine().SetComponentData(this);
                 default:
                     return null;
             }

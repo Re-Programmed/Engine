@@ -4,6 +4,7 @@ using System.Text;
 using System.IO;
 using Engine;
 using Engine.Objects;
+using System.Numerics;
 
 namespace Engine.Objects.Stages
 {
@@ -14,6 +15,12 @@ namespace Engine.Objects.Stages
         public static int stageId { get; private set; }  
 
         public static Stage currentStage { get; private set; }
+
+        public static Dictionary<uint, GameObject> storedLoadables = new Dictionary<uint, GameObject>();
+        public static void RegisterLoadables()
+        {
+            storedLoadables.Add(101, GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One * 10f, 0f, TestGame.INSTANCE.sr.verts, "test_sp"));
+        }
 
         public static void LoadStagesFromFiles(TestGame game)
         {
@@ -73,9 +80,42 @@ namespace Engine.Objects.Stages
             }
         }
 
+        internal static bool LoadFromStorage(LoadableStoredObject lso)
+        {
+            foreach(KeyValuePair<uint, GameObject> pair in storedLoadables)
+            {
+                if(pair.Key == (uint)lso.i)
+                {
+                    GameObject newObj = pair.Value.GetMemberwiseClone();
+
+                    newObj.SetPosition(new Vector2(lso.px, lso.py));
+                    newObj.SetScale(new Vector2(lso.sx, lso.sy));
+                    newObj.SetLayer(lso.l);
+                    newObj.SetRotation(lso.r);
+
+                    TestGame.INSTANCE.Instantiate(newObj, lso.l);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static Stage GetStage(int id)
         {
             return stages[id];
+        }
+
+        public static Stage GetStage(string id)
+        {
+            foreach (Stage s in stages)
+            {
+                if (s.Name == id)
+                {
+                    return s;
+                }
+            }
+            return null;
         }
 
         public static void LoadStage(int id, TestGame game)

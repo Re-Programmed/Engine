@@ -25,14 +25,16 @@ using Engine.Objects.Components.UIComponents;
 using Engine.Resources.AchievementsSystem;
 using Engine.Input.Utils;
 using Engine.GameFiles.Menus;
+using Engine.GameFiles.Audio.MusicSync;
+using DiscordRPC;
 
 namespace Engine
 {
     class TestGame : Game.Game
     {
-        public static TestGame INSTANTCE;
+        public static TestGame INSTANCE;
 
-        public const bool DEVELOPER_MODE = true;
+        public readonly bool DEVELOPER_MODE = Environment.GetCommandLineArgs().Length > 1 && Environment.GetCommandLineArgs()[1] == "Developer";
 
         //byte vao;
         //byte vbo;
@@ -59,7 +61,7 @@ namespace Engine
         public static void Destroy(GameObject obj, int layer)
         {
             removeObjects.Add(new IDObject(GenerateUUIDDestroyable(), obj), layer);
-            obj.Destroy(TestGame.INSTANTCE);
+            obj.Destroy(TestGame.INSTANCE);
         }
 
 
@@ -78,6 +80,12 @@ namespace Engine
                 AchievementManager.RegisterAchievement(a);
             }
 
+        }
+
+        public static void DebugPrint(string s)
+        {
+            System.Diagnostics.Debug.WriteLine(s);
+            System.Diagnostics.Debugger.Break();
         }
 
         protected unsafe override void Initalize()
@@ -112,6 +120,7 @@ namespace Engine
             floor.AddComponent(pa);
             floor.ignoreStageSaving = true;
             pa.settings.SetStatic(true);
+
             /*
             GameObject wall = GameObject.CreateGameObjectSprite(new Vector2(300f, 30f), new Vector2(40f, 50f), 0f, sr.verts, "test_sp");
             objects[4].objects.Add(wall);
@@ -125,12 +134,40 @@ namespace Engine
 
             MenuLoader.LoadMenu(0, this);
 
-            SoundManager.GetSoundById("t_title").Play();
+            StageManager.GetStage("level").OnLoadStage += BeginLevelOne;
+        }
+
+        void SetPlayerRandomColor(int b)
+        {
+            //Random r = new Random();
+            //defaultTriggerObject.color = new Vector3((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
+        }
+
+        /// <summary>
+        /// This is for testing the on load function.
+        /// </summary>
+        void BeginLevelOne()
+        {
+            DiscordRPC.RPCManager.UpdateState(new RichPresence()
+            {
+                Timestamps = new Timestamps(DateTime.UtcNow),
+                Details = "Level One.",
+                State = "Adventuring.",
+                Assets = new Assets()
+                {
+                    LargeImageKey = "testing",
+                    LargeImageText = "Adventuring",
+                    SmallImageKey = "testing"
+                }
+            });
+            //SoundManager.GetSoundById("t_city_escape").Play();
+            MusicTick.ResetUpdateTick();
+            MusicTick.beatTick += SetPlayerRandomColor;
         }
 
         protected unsafe override void LoadContent()
         {
-            INSTANTCE = this;
+            INSTANCE = this;
 
             SoundManager.InitAllSounds();
 
@@ -159,7 +196,8 @@ namespace Engine
             sr.initRenderData();
 
             TextureRegistry.LoadRegistry();
-           
+
+            StageManager.RegisterLoadables();
         }
 
         protected override void Render()
@@ -236,6 +274,8 @@ namespace Engine
 
         protected override void Update()
         {
+            MusicTick.UpdateTick();
+
             PauseMenuManager.UpdateCheckKey(this);
 
             if(clearUI)

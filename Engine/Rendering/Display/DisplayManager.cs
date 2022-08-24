@@ -120,7 +120,7 @@ namespace Engine.Rendering.Display
             Import(Glfw.GetProcAddress);
 
             glViewport(0, 0, width, height);
-            Glfw.SwapInterval(0); //Vsync off, 1 is on
+            Glfw.SwapInterval(1); //Vsync off, 1 is on
 
             SetIcon(new string[] { "../../../icons/128x128.png", "../../../icons/64x64.png", "../../../icons/32x32.png", "../../../icons/16x16.png", "../../../icons/8x8.png" });
             Fullscreen();

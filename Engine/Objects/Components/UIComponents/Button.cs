@@ -123,5 +123,20 @@ namespace Engine.Objects.Components.UIComponents
         }
 
         public abstract void Click(TestGame game);
+
+        protected ComponentData myData;
+
+        public Component SetComponentData(ComponentData data)
+        {
+            myData = data;
+            data.type = GetComponentType();
+            return this;
+        }
+
+        public ComponentData GetComponentData()
+        {
+            if (myData == null) { return new ComponentData(); }
+            return myData;
+        }
     }
 }

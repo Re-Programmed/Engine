@@ -29,6 +29,8 @@ namespace Engine.Objects.Stages
 
         public List<ComponentData> triggers { get; set; } = new List<ComponentData>();
 
+        public List<ComponentData> comps { get; set; } = new List<ComponentData>();
+
         public Physics.PhysicsObjectSettings PhysicsSettings { get; set; }
 
         internal StageObject SetPositionScaleAndRotation(Vector2 position, Vector2 scale, float rotation)
@@ -75,6 +77,10 @@ namespace Engine.Objects.Stages
                         Trigger t = c as Trigger;
                         triggers.Add(t.data);
                     }
+                    else
+                    {
+                        comps.Add(c.GetComponentData());
+                    }
                 }
             }
         }
@@ -107,6 +113,10 @@ namespace Engine.Objects.Stages
                         Trigger t = c as Trigger;
                         triggers.Add(t.data);
                     }
+                    else
+                    {
+                        comps.Add(c.GetComponentData());
+                    }
                 }
             }
         }
@@ -130,6 +140,11 @@ namespace Engine.Objects.Stages
             foreach(ComponentData t in triggers)
             {
                 myObject.AddComponent(t.GenerateTriggerFromData());
+            }
+
+            foreach(ComponentData cd in comps)
+            {
+                myObject.AddComponent(cd.GenerateGeneralFromData());
             }
 
             game.Instantiate(myObject, Layer);

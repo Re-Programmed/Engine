@@ -20,11 +20,11 @@ namespace Engine.Objects.UI
             return m;
         }
 
-        public void LoadMenu(TestGame game, GameObject parent = null)
+        public void LoadMenu(TestGame game, GameObject parent = null, bool camRelative = true)
         {
             foreach (StoredMenuObject obj in components)
             {
-                obj.LoadObject(game, parent);
+                obj.LoadObject(game, parent, camRelative);
             }
         }
     }

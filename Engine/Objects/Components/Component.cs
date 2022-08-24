@@ -6,6 +6,9 @@ namespace Engine.Objects.Components
 {
     interface Component
     {
+        public abstract Component SetComponentData(ComponentData data);
+        public abstract ComponentData GetComponentData();
+
         public enum ComponentType
         { 
             SpriteAnimator,
@@ -14,7 +17,8 @@ namespace Engine.Objects.Components
             PhysicsRel,
             Trigger_Layer,
             UI_Button_Stage,
-            UI_Button_Close
+            UI_Button_Close,
+            Interactable_Slots
         }
 
         public abstract ComponentType GetComponentType();
