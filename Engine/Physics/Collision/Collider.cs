@@ -11,6 +11,8 @@ namespace Engine.Physics
         public void Disable();
         public void Enable();
 
+        public void UpdateScale(Vector2 scale);
+
         public void UpdateCenter(Vector2 center);
         public void UpdateLayer(int layer);
     }

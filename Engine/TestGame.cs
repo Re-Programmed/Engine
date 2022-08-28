@@ -27,6 +27,9 @@ using Engine.Input.Utils;
 using Engine.GameFiles.Menus;
 using Engine.GameFiles.Audio.MusicSync;
 using DiscordRPC;
+using Engine.GameFiles.Audio.MusicGroups;
+using Engine.misc;
+using Engine.GameFiles.ObjectScripts;
 
 namespace Engine
 {
@@ -46,6 +49,9 @@ namespace Engine
         protected static Dictionary<IDObject, int> removeObjects = new Dictionary<IDObject, int>();
 
         protected Camera2d camUI = new Camera2d(Vector2.Zero, 1f);
+
+        static List<UpdateDependent> updateDependents = new List<UpdateDependent>();
+        public static void RegisterUpdateDependent(UpdateDependent ud) { updateDependents.Add(ud); }
 
 #pragma warning disable CS0649
         static GameObject defaultTriggerObject;
@@ -108,7 +114,7 @@ namespace Engine
             player.SetLayer(4);
             objects[4].objects.Add(player);
             player.AddComponent(new Player());
-            player.AddComponent(new PhysicsAffected());
+            player.AddComponent(new PhysicsAffected().SetScaleMultiplier(new Vector2(0.9f, 1f), false));
             player.ignoreStageSaving = true;
             player.SetAlwaysLoad(true);
             defaultTriggerObject = player;
@@ -120,6 +126,24 @@ namespace Engine
             floor.AddComponent(pa);
             floor.ignoreStageSaving = true;
             pa.settings.SetStatic(true);
+
+            GameObject bg = GameObject.CreateGameObjectSprite(new Vector2(-250f, -250f), Vector2.One * 500f, 0f, sr.verts, "sky");
+            bg.SetLayer(1);
+            bg.ignoreStageSaving = true;
+            objects[1].objects.Add(bg);
+
+            GameObject bg2 = GameObject.CreateGameObjectSprite(new Vector2(-250f, -750f), Vector2.One * 500f, 0f, sr.verts, "sky");
+            bg2.SetLayer(1);
+            bg2.ignoreStageSaving = true;
+            objects[1].objects.Add(bg2);
+
+            GameObject fg = GameObject.CreateGameObjectSprite(new Vector2(50f, -1000f), new Vector2(50f, 2000f), 0f, sr.verts, "black");
+            fg.SetLayer(5);
+            fg.ignoreStageSaving = true;
+            objects[5].objects.Add(fg);
+
+            new ParallaxGroup(new GameObject[2] { bg, bg2 });
+            new ParallaxGroup(new GameObject[1] { fg }, -1f);
 
             /*
             GameObject wall = GameObject.CreateGameObjectSprite(new Vector2(300f, 30f), new Vector2(40f, 50f), 0f, sr.verts, "test_sp");
@@ -135,12 +159,6 @@ namespace Engine
             MenuLoader.LoadMenu(0, this);
 
             StageManager.GetStage("level").OnLoadStage += BeginLevelOne;
-        }
-
-        void SetPlayerRandomColor(int b)
-        {
-            //Random r = new Random();
-            //defaultTriggerObject.color = new Vector3((float)r.NextDouble(), (float)r.NextDouble(), (float)r.NextDouble());
         }
 
         /// <summary>
@@ -162,8 +180,18 @@ namespace Engine
             });
             //SoundManager.GetSoundById("t_city_escape").Play();
             MusicTick.ResetUpdateTick();
-            MusicTick.beatTick += SetPlayerRandomColor;
+            Dictionary<string, PartSwitchableSong.PartType> parts = new Dictionary<string, PartSwitchableSong.PartType>();
+            parts.Add("t_song_acc", PartSwitchableSong.PartType.Secondary);
+            parts.Add("t_song_bass", PartSwitchableSong.PartType.Bass);
+            parts.Add("t_song_chords", PartSwitchableSong.PartType.Tertiary);
+            parts.Add("t_song_drums", PartSwitchableSong.PartType.Drums);
+            parts.Add("t_song_lead", PartSwitchableSong.PartType.Lead);
+
+            testSong = new PartSwitchableSong(parts);
+            testSong.StartSong();
         }
+
+        public PartSwitchableSong testSong;
 
         protected unsafe override void LoadContent()
         {
@@ -219,9 +247,9 @@ namespace Engine
                 {
                     foreach (GameObject obj in objlay.objects)
                     {
-                        if (obj.totalposition.X > cam.FocusPosition.X - (DisplayManager.WindowSize.X / cam.Zoom / 2f) - 300f && obj.totalposition.X < cam.FocusPosition.X + (100f + DisplayManager.WindowSize.X / cam.Zoom / 2f))
+                        if (obj.totalposition.X > cam.FocusPosition.X - (DisplayManager.WindowSize.X / cam.Zoom / 2f) - obj.scale.X && obj.totalposition.X < cam.FocusPosition.X + (obj.scale.X + DisplayManager.WindowSize.X / cam.Zoom / 2f))
                         {
-                            if (obj.totalposition.Y > cam.FocusPosition.Y - (DisplayManager.WindowSize.Y / cam.Zoom / 2f) - 300f && obj.totalposition.Y < cam.FocusPosition.Y + (100f + DisplayManager.WindowSize.Y / cam.Zoom / 2f))
+                            if (obj.totalposition.Y > cam.FocusPosition.Y - (DisplayManager.WindowSize.Y / cam.Zoom / 2f) - obj.scale.Y && obj.totalposition.Y < cam.FocusPosition.Y + (obj.scale.Y + DisplayManager.WindowSize.Y / cam.Zoom / 2f))
                             {
                                 if (obj.Loaded == false)
                                 {
@@ -274,6 +302,25 @@ namespace Engine
 
         protected override void Update()
         {
+            List<UpdateDependent> ud_remove = new List<UpdateDependent>();
+            foreach(UpdateDependent ud in updateDependents)
+            {
+                if(ud == null || ud.Disabled)
+                {
+                    ud_remove.Add(ud);
+                }
+
+                ud.Update();
+            }
+
+            if(ud_remove.Count > 0)
+            {
+                foreach (UpdateDependent ud in ud_remove)
+                {
+                    updateDependents.Remove(ud);
+                }
+            }
+
             MusicTick.UpdateTick();
 
             PauseMenuManager.UpdateCheckKey(this);

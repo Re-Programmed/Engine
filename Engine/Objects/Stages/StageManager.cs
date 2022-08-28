@@ -5,6 +5,8 @@ using System.IO;
 using Engine;
 using Engine.Objects;
 using System.Numerics;
+using Engine.Objects.Components;
+using Engine.GameFiles.ObjectScripts.Platforms;
 
 namespace Engine.Objects.Stages
 {
@@ -17,9 +19,37 @@ namespace Engine.Objects.Stages
         public static Stage currentStage { get; private set; }
 
         public static Dictionary<uint, GameObject> storedLoadables = new Dictionary<uint, GameObject>();
+
+        public static List<PreregisteredObjectComponent> PreregisteredObjectComponents = new List<PreregisteredObjectComponent>();
         public static void RegisterLoadables()
         {
             storedLoadables.Add(101, GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One * 10f, 0f, TestGame.INSTANCE.sr.verts, "test_sp"));
+
+            RegisterPOC();
+
+            uint i = 2;
+            foreach(PreregisteredObjectComponent poc in PreregisteredObjectComponents)
+            {
+                foreach (GameObject g in poc.GetMyObjects())
+                {
+                    storedLoadables.Add(100 + i, g);
+                    i++;
+                }
+            }
+
+            //Unbind all POC objects that are not needed anymore.
+            PreregisteredObjectComponents.Clear();
+            PreregisteredObjectComponents = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        /// <summary>
+        /// Adds all PreregisteredObjectComponents to the registry.
+        /// </summary>
+        static void RegisterPOC()
+        {
+            PreregisteredObjectComponents.Add(new LerpingPlatform());
         }
 
         public static void LoadStagesFromFiles(TestGame game)

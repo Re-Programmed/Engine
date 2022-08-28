@@ -50,6 +50,7 @@ namespace Engine.SoundSys
         public void SetVolume(float vol)
         {
             volume = vol;
+            sound.Volume = grouping.GetVolume() * vol;
         }
 
         public float GetVolume()

@@ -10,6 +10,7 @@ using Engine.Utils;
 using Engine.Game;
 using Engine.DevUtils;
 using Engine.Input.Utils;
+using Engine.GameFiles.Audio.MusicGroups;
 
 namespace Engine.GameFiles
 {
@@ -23,7 +24,27 @@ namespace Engine.GameFiles
 
         public override void ScriptUpdate(TestGame game)
         {
-            game.cam.LerpTwards(gameObject.position, 0.01f);
+            if (Input.Input.GetKey(GLFW.Keys.V))
+            {
+                game.testSong.StopAllParts();
+
+                game.testSong.PlayPart(PartSwitchableSong.PartType.Lead);
+                game.testSong.PlayPart(PartSwitchableSong.PartType.Secondary);
+
+            }
+
+            if (Input.Input.GetKey(GLFW.Keys.C))
+            {
+                game.testSong.StopAllParts();
+
+                game.testSong.PlayPart(PartSwitchableSong.PartType.Drums);
+                game.testSong.PlayPart(PartSwitchableSong.PartType.Bass);
+                game.testSong.PlayPart(PartSwitchableSong.PartType.Tertiary);
+
+            }
+
+
+            game.cam.LerpTwards(gameObject.position, 0.01f * GameTime.TimeScale);
             if(gameObject.position.Y > 500)
             {
                 gameObject.SetPosition(new Vector2(gameObject.position.X, -500));

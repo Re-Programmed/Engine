@@ -33,19 +33,10 @@ namespace Engine.DevUtils
         {
             debugObjects = new List<GameObject>();
 
-            GameObject testGround = GameObject.CreateGameObjectSprite(Vector2.Zero, new Vector2(50f, 50f), 0f, game.sr.verts, "black");
-            testGround.AddComponent(new Physics.PhysicsAffected().SetStatic(true));
-            debugObjects.Add(testGround);
-
-            GameObject trigger = GameObject.CreateGameObjectSprite(Vector2.Zero, Vector2.One * 25f, 0f, game.sr.verts, "test_sp");
-
-            LayerSwitch ls = new LayerSwitch();
-            ls.SetRadius(25f);
-            ls.SetLayer(1);
-
-            trigger.AddComponent(ls);
-
-            debugObjects.Add(trigger);
+           foreach(GameObject go in StageManager.storedLoadables.Values)
+            {
+                debugObjects.Add(go);
+            }
 
             currentObjectToPlace = debugObjects[0];
         }

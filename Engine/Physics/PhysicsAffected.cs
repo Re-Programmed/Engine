@@ -15,6 +15,20 @@ namespace Engine.Physics
 
         GameObject gameObject;
 
+        Vector2 scaleMultiplier;
+
+        public Vector2 GetScaleMultiplier()
+        {
+            return scaleMultiplier == null ? scaleMultiplier : Vector2.One;
+        }
+
+        public PhysicsAffected SetScaleMultiplier(Vector2 scaleMultiplier, bool update = true)
+        {
+            this.scaleMultiplier = scaleMultiplier;
+            if (update) { collider.UpdateScale(gameObject.scale * GetScaleMultiplier()); }
+            return this;
+        }
+
         public VelocityVector velocity = new VelocityVector(Vector2.One * 1f);
 
         /// <summary>
@@ -31,7 +45,7 @@ namespace Engine.Physics
 
         public void Init(GameObject parent)
         {
-            collider = new Collision.BoxCollider(parent.scale, parent.position, parent.Layer);
+            collider = new Collision.BoxCollider(parent.scale * GetScaleMultiplier(), parent.position, parent.Layer);
             settings.SetGravity(true, settings.GravityStrength);
             gameObject = parent;
         }
@@ -42,9 +56,10 @@ namespace Engine.Physics
             return this;
         }
 
-        public void UpdateLayer(int layer)
+        public PhysicsAffected UpdateLayer(int layer)
         {
             collider.UpdateLayer(layer);
+            return this;
         }
 
         public void Update(TestGame game)

@@ -32,6 +32,12 @@ namespace Engine.Physics.Collision
             PhysicsManager.RegisterCollider(this);
         }
 
+
+        public void UpdateScale(Vector2 scale)
+        {
+            this.scale = scale;
+        }
+
         public void UpdateCenter(Vector2 center)
         {
             this.center = center;
