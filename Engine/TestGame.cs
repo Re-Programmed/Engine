@@ -39,11 +39,6 @@ namespace Engine
 
         public readonly bool DEVELOPER_MODE = Environment.GetCommandLineArgs().Length > 1 && Environment.GetCommandLineArgs()[1] == "Developer";
 
-        //byte vao;
-        //byte vbo;
-
-        //Shader shader;
-
         public SpriteRenderer sr { get; private set; }
 
         protected static Dictionary<IDObject, int> removeObjects = new Dictionary<IDObject, int>();
