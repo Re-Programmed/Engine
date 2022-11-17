@@ -172,8 +172,9 @@ namespace Engine
                     SmallImageKey = "testing"
                 }
             });
-            //SoundManager.GetSoundById("t_city_escape").Play();
+            
             MusicTick.ResetUpdateTick();
+            /*
             Dictionary<string, PartSwitchableSong.PartType> parts = new Dictionary<string, PartSwitchableSong.PartType>();
             parts.Add("t_song_acc", PartSwitchableSong.PartType.Secondary);
             parts.Add("t_song_bass", PartSwitchableSong.PartType.Bass);
@@ -183,6 +184,7 @@ namespace Engine
 
             testSong = new PartSwitchableSong(parts);
             testSong.StartSong();
+            */
         }
 
         public PartSwitchableSong testSong;
