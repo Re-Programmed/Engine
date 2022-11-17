@@ -6,7 +6,7 @@ namespace Engine.Objects.Stages
 {
     class StoredIDObject
     {
-        const string StoredPath = "objects/stored.json";
+        const string StoredPath = "objects/stored.b64";
 
         static List<StoredIDObject> storedIDObjects;
         public int id { get; set; }

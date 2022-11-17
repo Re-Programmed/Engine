@@ -7,7 +7,7 @@ namespace Engine.Input.Utils
 {
     static class KeybindManager
     {
-        const string KeysFilePath = "prefs/keys.json";
+        const string KeysFilePath = "prefs/keys.b64";
 
         static Dictionary<string, Keybind> keybinds;
 

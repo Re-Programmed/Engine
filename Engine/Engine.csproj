@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <Folder Include="icons\" />
-    <Folder Include="misc\prefs\" />
     <Folder Include="Properties\" />
     <Folder Include="saves\" />
     <Folder Include="textures\text\menus\pause\" />

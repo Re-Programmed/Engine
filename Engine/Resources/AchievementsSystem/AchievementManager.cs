@@ -6,7 +6,7 @@ namespace Engine.Resources.AchievementsSystem
 {
     static class AchievementManager
     {
-        const string FilePath = "additional_content/achievements.json";
+        const string FilePath = "additional_content/achievements.b64";
         static List<AchievementStatus> achievements_status = new List<AchievementStatus>();
         static List<Achievement> achievements = new List<Achievement>();
 

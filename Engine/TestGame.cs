@@ -67,7 +67,7 @@ namespace Engine
         public static void Destroy(GameObject obj, int layer)
         {
             removeObjects.Add(new IDObject(GenerateUUIDDestroyable(), obj), layer);
-            obj.Destroy(TestGame.INSTANCE);
+            obj.Destroy(INSTANCE);
         }
 
 
@@ -88,12 +88,6 @@ namespace Engine
 
         }
 
-        public static void DebugPrint(string s)
-        {
-            System.Diagnostics.Debug.WriteLine(s);
-            System.Diagnostics.Debugger.Break();
-        }
-
         protected unsafe override void Initalize()
         {
             Engine.DiscordRPC.RPCManager.Initialize();
@@ -110,7 +104,7 @@ namespace Engine
              s.AddNewStageObject(new StageObject(new Vector2(0f, 100), new Vector2(40, 56), 0, "test_sp"));
              Stage.CreateFileFromStage(s);*/
             
-            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "test_sp");
+            GameObject player = GameObject.CreateGameObjectSprite(new Vector2(0f, 0f), new Vector2(40f, 56f), 0f, sr.verts, "parrot");
             player.SetLayer(4);
             objects[4].objects.Add(player);
             player.AddComponent(new Player());
@@ -230,7 +224,6 @@ namespace Engine
 
         protected override void Render()
         {
-
             glClearColor(0.15f, 0.15f, 0.15f, 0);
             glClear(GL_COLOR_BUFFER_BIT);
 
